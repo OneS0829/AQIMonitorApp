@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="32dp"
+    tools:context="ones.demo.aqimonitorapp.MainActivity"
+    android:background="@drawable/clouds">
+
+    <TextView
+        android:id="@+id/updateDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:text="資料擷取中..."
+        android:textColor="@android:color/black"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:layout_below="@+id/updateDateTextView"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/view" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/selectedBar"
+        android:layout_below="@+id/view"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地區"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:id="@+id/countrySpinner"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/black"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" > "/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:id="@+id/siteSpinner"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/black"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchButton"
+            android:text="查詢"
+            android:onClick="onSearch"/>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:layout_below="@id/selectedBar"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/view3" />
+
+    <TextView
+        android:layout_width= "wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view3"
+        android:text="未知 工作站資訊"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:id="@+id/workStationTextView"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:layout_below="@id/workStationTextView"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/view4" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:layout_below="@+id/view4"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:text="監測項目"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:textSize="18sp"
+                android:padding="6dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:text="測值"
+                android:id="@+id/textView1"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:textSize="18sp"
+                android:padding="6dp"
+                android:textColor="@android:color/black"></TextView>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="AQI"
+                android:id="@+id/AQITextView"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:id="@+id/AQITextViewField"
+                android:text="擷取中..."
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="二氧化硫(SO2)"
+                android:id="@+id/SO2TextView"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:id="@+id/SO2TextViewField"
+                android:text="擷取中..."
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="二氧化氮(NO2)"
+                android:id="@+id/NO2TextView"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:id="@+id/NO2TextViewField"
+                android:text="擷取中..."
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="一氧化碳(CO)"
+                android:id="@+id/COTextView"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:id="@+id/COTextViewField"
+                android:text="擷取中..."
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+        android:layout_height="wrap_content"
+        android:id="@+id/tableRow6"
+        android:layout_width="match_parent">
+        <TextView
+            android:text="臭氧(O3)"
+            android:id="@+id/O3TextView"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:textColor="@android:color/black"></TextView>
+        <TextView
+            android:id="@+id/O3TextViewField"
+            android:text="擷取中..."
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:textColor="@android:color/black">
+        </TextView>
+       </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:id="@+id/tableRow7"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="細懸浮微粒(PM2.5)"
+                android:id="@+id/PM2DOT5TextView"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:id="@+id/PM2DOT5TextViewField"
+                android:text="擷取中..."
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black">
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:id="@+id/tableRow8"
+            android:layout_width="match_parent">
+            <TextView
+                android:text="懸浮微粒(PM10)"
+                android:id="@+id/PM10TextView"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black"></TextView>
+            <TextView
+                android:id="@+id/PM10TextViewField"
+                android:text="擷取中..."
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textColor="@android:color/black">
+            </TextView>
+        </TableRow>
+
+
+    </TableLayout>
+
+</RelativeLayout>
