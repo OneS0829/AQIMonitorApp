@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -69,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
     TextView PM2DOT5TextView;
     TextView PM10TextView;
     TextView workStationTextView;
+    RadioButton recentStationRadioButton;
+    RadioButton otherStationRadioButton;
 
     Thread databaseUpdateThread;
     boolean databaseUpdateActive = false;
@@ -420,6 +424,55 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onRecentStationFound(){
+        Cursor c=db.rawQuery("SELECT * FROM "+db_tableName, null);
+        double minDistance = -1;
+        String recentSiteName = "";
+        String recentCounty = "";
+
+        c.moveToFirst();    // 移到第 1 筆資料
+        do{        // 逐筆讀出資料
+            double tempLongitude = Double.parseDouble(c.getString(3));
+            double tempLatitude = Double.parseDouble(c.getString(4));
+            double tempDistance = gps2m(myCurrentLocation.getLatitude(), myCurrentLocation.getLongitude(),tempLatitude, tempLongitude);
+            if(minDistance == -1 || tempDistance < minDistance)
+            {
+                minDistance = tempDistance;
+                recentSiteName = c.getString(1);
+                recentCounty = c.getString(2);
+            }
+        } while(c.moveToNext());    // 有一下筆就繼續迴圈
+
+        if(!recentSiteName.equals(currentSiteName)) {
+            currentSiteName = recentSiteName;
+            currentCounty = recentCounty;
+
+            siteArrayLists.clear();
+            Cursor c2 = db.rawQuery("SELECT SiteName FROM " + db_tableName + " WHERE County ='" + recentCounty + "'", null);
+            c2.moveToFirst();    // 移到第 1 筆資料
+            do {        // 逐筆讀出資料
+                siteArrayLists.add(c2.getString(0));
+                //Log.i("SiteName",c2.getString(0));
+            } while (c2.moveToNext());    // 有一下筆就繼續迴圈
+            siteArrayAdapter.notifyDataSetChanged();
+
+            onUIDataUpdate();
+
+            for (int i = 0; i < siteArrayLists.size(); i++) {
+                if (recentSiteName.equals(siteArrayLists.get(i))) {
+                    siteSpinner.setSelection(i);
+                    break;
+                }
+            }
+            for (int i = 0; i < countyArrayLists.size(); i++) {
+                if (recentCounty.equals(countyArrayLists.get(i))) {
+                    countySpinner.setSelection(i);
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -444,6 +497,34 @@ public class MainActivity extends AppCompatActivity {
         PM2DOT5TextView = (TextView)findViewById(R.id.PM2DOT5TextViewField);;
         PM10TextView = (TextView)findViewById(R.id.PM10TextViewField);
         workStationTextView = (TextView)findViewById(R.id.workStationTextView);
+        recentStationRadioButton = (RadioButton)findViewById(R.id.recentStationRadioButton);
+        otherStationRadioButton = (RadioButton)findViewById(R.id.otherStationRadioButton);
+        siteSpinner.setEnabled(false);
+        countySpinner.setEnabled(false);
+        recentStationRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked == true)
+                {
+                    otherStationRadioButton.setChecked(false);
+                    siteSpinner.setEnabled(false);
+                    countySpinner.setEnabled(false);
+                    onRecentStationFound();
+                }
+
+            }
+        });
+        otherStationRadioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                  if(isChecked == true)
+                  {
+                      recentStationRadioButton.setChecked(false);
+                      siteSpinner.setEnabled(true);
+                      countySpinner.setEnabled(true);
+                  }
+            }
+        });
 
         countyArrayLists.clear();
         siteArrayLists.clear();
@@ -473,20 +554,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        siteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("SiteName",siteArrayLists.get(position).toString()+" has tapped!");
-                currentSiteName = siteArrayLists.get(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-*/
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -495,55 +562,7 @@ public class MainActivity extends AppCompatActivity {
                // Log.i("Location", String.valueOf(location.getLongitude())+":"+String.valueOf(location.getLatitude()));
                 myCurrentLocation.setLatitude(location.getLatitude());
                 myCurrentLocation.setLongitude(location.getLongitude());
-
-                Cursor c=db.rawQuery("SELECT * FROM "+db_tableName, null);
-                double minDistance = -1;
-                String recentSiteName = "";
-                String recentCounty = "";
-
-                c.moveToFirst();    // 移到第 1 筆資料
-                do{        // 逐筆讀出資料
-                    double tempLongitude = Double.parseDouble(c.getString(3));
-                    double tempLatitude = Double.parseDouble(c.getString(4));
-                    double tempDistance = gps2m(myCurrentLocation.getLatitude(), myCurrentLocation.getLongitude(),tempLatitude, tempLongitude);
-                    if(minDistance == -1 || tempDistance < minDistance)
-                    {
-                        minDistance = tempDistance;
-                        recentSiteName = c.getString(1);
-                        recentCounty = c.getString(2);
-                    }
-                } while(c.moveToNext());    // 有一下筆就繼續迴圈
-
-                if(!recentSiteName.equals(currentSiteName)) {
-                    currentSiteName = recentSiteName;
-                    currentCounty = recentCounty;
-
-                    siteArrayLists.clear();
-                    Cursor c2 = db.rawQuery("SELECT SiteName FROM " + db_tableName + " WHERE County ='" + recentCounty + "'", null);
-                    c2.moveToFirst();    // 移到第 1 筆資料
-                    do {        // 逐筆讀出資料
-                        siteArrayLists.add(c2.getString(0));
-                        //Log.i("SiteName",c2.getString(0));
-                    } while (c2.moveToNext());    // 有一下筆就繼續迴圈
-                    siteArrayAdapter.notifyDataSetChanged();
-
-                    onUIDataUpdate();
-
-                    for (int i = 0; i < siteArrayLists.size(); i++) {
-                        if (recentSiteName.equals(siteArrayLists.get(i))) {
-                            siteSpinner.setSelection(i);
-                            break;
-                        }
-                    }
-                    for (int i = 0; i < countyArrayLists.size(); i++) {
-                        if (recentCounty.equals(countyArrayLists.get(i))) {
-                            countySpinner.setSelection(i);
-                            break;
-                        }
-                    }
-                }
-
-
+                if(recentStationRadioButton.isChecked()) onRecentStationFound();
             }
 
             @Override
