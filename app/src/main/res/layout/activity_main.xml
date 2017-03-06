@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/recentStationRadioButton"
             android:layout_weight="1"
-            android:checked="true"/>
+            android:checked="false"/>
 
         <RadioButton
             android:text="他站監測"
@@ -151,7 +151,7 @@
                 android:text="監測項目"
                 android:textStyle="bold"
                 android:typeface="serif"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:padding="6dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
@@ -159,7 +159,7 @@
                 android:id="@+id/textView1"
                 android:textStyle="bold"
                 android:typeface="serif"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:padding="6dp"
                 android:textColor="@android:color/black"></TextView>
 
@@ -173,13 +173,13 @@
                 android:text="AQI"
                 android:id="@+id/AQITextView"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
                 android:id="@+id/AQITextViewField"
                 android:text="擷取中..."
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black">
             </TextView>
@@ -193,13 +193,13 @@
                 android:text="二氧化硫(SO2)"
                 android:id="@+id/SO2TextView"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
                 android:id="@+id/SO2TextViewField"
                 android:text="擷取中..."
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black">
             </TextView>
@@ -213,13 +213,13 @@
                 android:text="二氧化氮(NO2)"
                 android:id="@+id/NO2TextView"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
                 android:id="@+id/NO2TextViewField"
                 android:text="擷取中..."
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black">
             </TextView>
@@ -233,13 +233,13 @@
                 android:text="一氧化碳(CO)"
                 android:id="@+id/COTextView"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
                 android:id="@+id/COTextViewField"
                 android:text="擷取中..."
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black">
             </TextView>
@@ -253,13 +253,13 @@
             android:text="臭氧(O3)"
             android:id="@+id/O3TextView"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:padding="5dp"
             android:textColor="@android:color/black"></TextView>
         <TextView
             android:id="@+id/O3TextViewField"
             android:text="擷取中..."
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:padding="5dp"
             android:textColor="@android:color/black">
         </TextView>
@@ -273,13 +273,13 @@
                 android:text="細懸浮微粒(PM2.5)"
                 android:id="@+id/PM2DOT5TextView"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
                 android:id="@+id/PM2DOT5TextViewField"
                 android:text="擷取中..."
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black">
             </TextView>
@@ -293,13 +293,13 @@
                 android:text="懸浮微粒(PM10)"
                 android:id="@+id/PM10TextView"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black"></TextView>
             <TextView
                 android:id="@+id/PM10TextViewField"
                 android:text="擷取中..."
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:padding="5dp"
                 android:textColor="@android:color/black">
             </TextView>

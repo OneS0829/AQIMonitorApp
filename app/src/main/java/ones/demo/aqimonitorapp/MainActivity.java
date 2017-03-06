@@ -325,6 +325,8 @@ public class MainActivity extends AppCompatActivity {
 
                     //Log.i("Initial State","Done");
 
+                    recentStationRadioButton.setChecked(true);
+
                     countyArrayLists.clear();
                     siteArrayLists.clear();
                     Cursor c=db.rawQuery("SELECT * FROM "+db_tableName, null);
