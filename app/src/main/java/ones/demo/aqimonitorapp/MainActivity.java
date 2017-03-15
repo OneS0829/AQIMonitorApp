@@ -1,5 +1,7 @@
 package ones.demo.aqimonitorapp;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     boolean databaseUpdateActive = false;
     Thread uiDataUpdateThread;
     boolean uiDataUpdateActive = false;
+    Dialog dialog;
 
     // 編號表格欄位名稱，固定不變
     public static final String KEY_ID = "_id";
@@ -105,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
          currentSiteName = sitename;
          currentCounty = county;
+
+        dialog.show();
 
         AQITextView.setText("擷取中...");
         SO2TextView.setText("擷取中...");
@@ -162,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
           updateDateTextView.setText("最新觀測時間: "+c.getString(12));
           workStationTextView.setText(currentSiteName+" 工作站資訊");
 
+          dialog.dismiss();
     }
 
     @Override
@@ -207,11 +213,15 @@ public class MainActivity extends AppCompatActivity {
                              "PublishTime VARCHAR(48))";
         db.execSQL(createTable);
 
+        dialog = ProgressDialog.show(MainActivity.this,
+                "讀取中", "Wait...",true);
+
         onDatabaseInitial();
     }
 
     public void onDatabaseInitial()
     {
+
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.mode = 1;
         downloadTask.execute(myUrl);
@@ -231,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         HttpURLConnection httpURLConnection;
         String result = "";
         int mode = 0;
+
 
         @Override
         protected String doInBackground(String... urls) {
@@ -262,7 +273,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String result)
+        {
             super.onPostExecute(result);
             //Log.i("Result", result.toString());
 
@@ -428,6 +440,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onRecentStationFound(){
         Cursor c=db.rawQuery("SELECT * FROM "+db_tableName, null);
+        dialog.show();
         double minDistance = -1;
         String recentSiteName = "";
         String recentCounty = "";
@@ -511,6 +524,7 @@ public class MainActivity extends AppCompatActivity {
                     otherStationRadioButton.setChecked(false);
                     siteSpinner.setEnabled(false);
                     countySpinner.setEnabled(false);
+
                     onRecentStationFound();
                 }
 
